@@ -76,10 +76,10 @@ a{color:inherit;text-decoration:none}
 .page .price-alt{font-size:1.1rem;font-weight:600;color:var(--muted-fg)}
 .page .btns{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px}
 .gallery h2{font-size:1.3rem;font-weight:700;margin-bottom:16px}
-.swiper{border-radius:1rem;overflow:hidden}
-.swiper-slide{background:color-mix(in srgb,var(--muted) 30%,transparent);display:flex;align-items:center;justify-content:center;min-height:300px}
-.swiper-slide img{width:100%;height:100%;object-fit:contain;max-height:600px}
-.swiper-slide video{width:100%;max-height:600px}
+.swiper{border-radius:1rem;overflow:hidden; box-shadow:0 8px 32px hsla(var(--glow),.08);}
+.swiper-slide{background:color-mix(in srgb,var(--muted) 30%,transparent);display:flex;align-items:center;justify-content:center;min-height:300px; position: relative;}
+.swiper-slide img{width:100%;height:100%;object-fit:cover;max-height:600px}
+.swiper-slide video{width:100%;max-height:600px; object-fit: cover;}
 .swiper-button-next,.swiper-button-prev{color:var(--primary)!important}
 .swiper-pagination-bullet-active{background:var(--primary)!important}
 
@@ -98,7 +98,6 @@ a{color:inherit;text-decoration:none}
 .row-2{display:flex;gap:12px}
 .row-2 input:first-child{flex:1}
 .row-2 input:last-child{width:100px}
-.paypal-area{text-align:center;padding:32px 0}
 
 /* Comments */
 .comments{max-width:900px;margin:0 auto;padding:0 16px 80px}
@@ -107,14 +106,14 @@ a{color:inherit;text-decoration:none}
 .comment-form input,.comment-form textarea{width:100%;padding:12px 16px;border-radius:var(--radius);border:1px solid var(--border);background:color-mix(in srgb,var(--muted) 50%,transparent);color:var(--fg);margin-bottom:12px;font-family:inherit;font-size:.9rem;outline:none;resize:none}
 .comment-form input:focus,.comment-form textarea:focus{box-shadow:0 0 0 2px var(--primary)}
 .stars-input{display:flex;gap:4px;margin-bottom:12px}
-.stars-input button{background:none;border:none;cursor:pointer;font-size:20px;color:var(--muted-fg);transition:color .15s}
-.stars-input button.active{color:#facc15}
+.stars-input span{cursor:pointer;font-size:24px;color:var(--muted-fg);transition:color .15s}
+.stars-input span.active{color:#facc15}
 .comment-item{padding:20px;margin-bottom:12px}
 .comment-header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
 .comment-avatar{width:32px;height:32px;border-radius:50%;background:hsla(var(--glow),.15);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--primary)}
 .comment-name{font-weight:600}
 .comment-date{font-size:.75rem;color:var(--muted-fg);margin-inline-start:auto}
-.comment-stars{display:flex;gap:2px;margin-bottom:6px;font-size:14px}
+.comment-stars{display:flex;gap:2px;margin-bottom:6px;font-size:14px; color:#facc15;}
 .comment-text{font-size:.9rem;color:color-mix(in srgb,var(--fg) 90%,transparent);line-height:1.6}
 
 @media(min-width:768px){
@@ -135,7 +134,7 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <!-- HOME -->
-<div id="home">
+<div id="home" class="page active">
   <section class="hero">
     <div class="anim-fade" style="margin-bottom:24px">
       <img id="heroLogo" src="https://raw.githubusercontent.com/alaamnst-collab/-/main/Whisk_3b510798b685b0fb318464b4f38ca67adr.png" alt="MR Kessar Logo" class="hero-logo anim-glow">
@@ -143,7 +142,7 @@ a{color:inherit;text-decoration:none}
     <h1 class="anim-fade" id="heroTitle">MR Kessar</h1>
     <p class="subtitle anim-fade" id="heroSubtitle" style="animation-delay:.1s"></p>
     <p class="desc anim-fade" id="heroDesc" style="animation-delay:.2s"></p>
-    <a href="https://www.instagram.com/mr.kessar?igsh=MTFybHViYm03cGx1MQ==" target="_blank" rel="noopener noreferrer" class="btn-primary anim-fade" style="animation-delay:.3s" id="heroContact"></a>
+    <a href="https://www.instagram.com/mr.kessar" target="_blank" rel="noopener noreferrer" class="btn-primary anim-fade" style="animation-delay:.3s" id="heroContact"></a>
   </section>
   <section class="services">
     <h2 id="servicesTitle"></h2>
@@ -153,20 +152,31 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <!-- SERVICE PAGES -->
-<div class="page" id="page-video"></div>
-<div class="page" id="page-pages"></div>
-<div class="page" id="page-store"></div>
-<div class="page" id="page-app"></div>
+<div class="page" id="page-videoAds"></div>
+<div class="page" id="page-webPages"></div>
+<div class="page" id="page-stores"></div>
+<div class="page" id="page-apps"></div>
 <div class="page" id="page-automation"></div>
 
 <!-- Payment Popup -->
 <div class="popup-overlay" id="popupOverlay">
-  <div class="glass-card glow-border popup" id="popupBox" style="box-shadow:0 0 20px hsla(var(--glow),.15),inset 0 0 20px hsla(var(--glow),.05)">
-    <button class="close-btn" id="popupClose">✕</button>
+  <div class="glass-card popup" id="popupBox" style="box-shadow:0 0 20px hsla(var(--glow),.15)">
+    <button class="close-btn" onclick="closePopup()">✕</button>
     <h3 id="popupTitle"></h3>
     <div class="popup-price" id="popupPrice"></div>
-    <div class="method-tabs" id="methodTabs"></div>
-    <div id="popupBody"></div>
+    <div class="method-tabs" id="methodTabs">
+        <button class="method-tab active">💳 البطاقة</button>
+        <button class="method-tab">Paypal</button>
+    </div>
+    <div id="popupBody">
+        <input type="text" placeholder="الاسم / Name">
+        <input type="text" placeholder="رقم البطاقة / Card Number">
+        <div class="row-2">
+            <input type="text" placeholder="MM/YY">
+            <input type="text" placeholder="CVV">
+        </div>
+        <button class="btn-primary" style="width:100%" onclick="closePopup()">تأكيد الدفع</button>
+    </div>
   </div>
 </div>
 
@@ -184,15 +194,8 @@ const T = {
   apps:{ar:'تطبيقات',en:'Applications',fr:'Applications',es:'Aplicaciones'},
   automation:{ar:'أتمتة',en:'Automation',fr:'Automatisation',es:'Automatización'},
   buyNow:{ar:'اشتري الآن',en:'Buy Now',fr:'Acheter',es:'Comprar Ahora'},
-  orderNow:{ar:'اطلب الآن',en:'Order Now',fr:'Commander',es:'Pedir Ahora'},
   gallery:{ar:'معرض الأعمال',en:'Gallery',fr:'Galerie',es:'Galería'},
-  backHome:{ar:'الرئيسية',en:'Home',fr:'Accueil',es:'Inicio'},
-  name:{ar:'الاسم',en:'Name',fr:'Nom',es:'Nombre'},
-  cardNumber:{ar:'رقم البطاقة',en:'Card Number',fr:'Numéro de carte',es:'Número de tarjeta'},
-  expiry:{ar:'تاريخ الانتهاء',en:'Expiry',fr:'Expiration',es:'Vencimiento'},
-  cvv:{ar:'CVV',en:'CVV',fr:'CVV',es:'CVV'},
-  pay:{ar:'ادفع',en:'Pay',fr:'Payer',es:'Pagar'},
-  payment:{ar:'الدفع',en:'Payment',fr:'Paiement',es:'Pago'},
+  backHome:{ar:'← الرئيسية',en:'← Home',fr:'← Accueil',es:'← Inicio'},
   videoDesc:{ar:'فيديوهات إعلانية احترافية تجذب العملاء وتزيد المبيعات',en:'Professional advertising videos that attract customers and increase sales',fr:'Vidéos publicitaires professionnelles qui attirent les clients',es:'Videos publicitarios profesionales que atraen clientes'},
   pagesDesc:{ar:'صفحات ويب احترافية وسريعة بتصميم عصري',en:'Professional, fast web pages with modern design',fr:'Pages web professionnelles et rapides avec un design moderne',es:'Páginas web profesionales y rápidas con diseño moderno'},
   storeDesc:{ar:'متاجر إلكترونية متكاملة مع أنظمة دفع وشحن',en:'Complete online stores with payment and shipping systems',fr:'Boutiques en ligne complètes avec paiement et expédition',es:'Tiendas en línea completas con sistemas de pago y envío'},
@@ -202,6 +205,7 @@ const T = {
   comments:{ar:'التعليقات',en:'Comments',fr:'Commentaires',es:'Comentarios'},
   writeComment:{ar:'اكتب تعليقاً...',en:'Write a comment...',fr:'Écrire un commentaire...',es:'Escribe un comentario...'},
   submit:{ar:'إرسال',en:'Submit',fr:'Envoyer',es:'Enviar'},
+  name:{ar:'الاسم',en:'Name',fr:'Nom',es:'Nombre'}
 };
 function t(k){return T[k]?.[lang]||T[k]?.en||k}
 
@@ -215,18 +219,18 @@ let comments=[
 let currentPage='home';
 
 const servicesData=[
-  {key:'videoAds',emoji:'🎬',page:'video'},
-  {key:'webPages',emoji:'🌐',page:'pages'},
-  {key:'stores',emoji:'🛒',page:'store'},
-  {key:'apps',emoji:'📱',page:'app'},
+  {key:'videoAds',emoji:'🎬',page:'videoAds'},
+  {key:'webPages',emoji:'🌐',page:'webPages'},
+  {key:'stores',emoji:'🛒',page:'stores'},
+  {key:'apps',emoji:'📱',page:'apps'},
   {key:'automation',emoji:'🤖',page:'automation'},
 ];
 
 const pagesData={
-  video:{titleKey:'videoAds',descKey:'videoDesc',price:'99$',price2:'399$',price2Label:'videos10',images:[],videos:['https://raw.githubusercontent.com/alaamnst-collab/Vid/main/lv_0_20260313014600.mp4']},
-  pages:{titleKey:'webPages',descKey:'pagesDesc',price:'199$',images:['https://raw.githubusercontent.com/alaamnst-collab/Mawki3-wib/main/2.%2020260310_165821_112.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Mawki3-wib/main/3.%2020260310_165821_162.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Mawki3-wib/main/5.%2020260310_165841_165.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Mawki3-wib/main/Whisk_e81de0045f9bd27b5984d2af59c50ebadr.jpeg'],videos:[]},
-  store:{titleKey:'stores',descKey:'storeDesc',price:'399$',images:['https://raw.githubusercontent.com/alaamnst-collab/Matjar/main/Whisk_1f592b2520f8dd582a644b4370569e97dr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Matjar/main/Whisk_4a59c1a8d42d26b9da641b123d245222dr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Matjar/main/Whisk_4ba3897a866e895b0e944613fab1a513dr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Matjar/main/Whisk_5cb739f83c2fb3588b54133807867764dr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Matjar/main/Whisk_fdda8906b0d86a4b3ae4b49c8c008060dr.jpeg'],videos:[]},
-  app:{titleKey:'apps',descKey:'appDesc',price:'499$',images:['https://raw.githubusercontent.com/alaamnst-collab/Tatbik/main/Picsart_26-03-10_16-40-27-629.jpg','https://raw.githubusercontent.com/alaamnst-collab/Tatbik/main/Picsart_26-03-10_16-42-11-294.jpg','https://raw.githubusercontent.com/alaamnst-collab/Tatbik/main/Whisk_275473eff151c7082254edc1f15f798ddr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Tatbik/main/Whisk_6719437bc729151ba0d4d0f15babb2d6dr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Tatbik/main/Whisk_75df3d67a694fd48e464fddd4b69d033dr.jpeg'],videos:[]},
+  videoAds:{titleKey:'videoAds',descKey:'videoDesc',price:'99$',price2:'399$',price2Label:'videos10',images:[],videos:['https://raw.githubusercontent.com/alaamnst-collab/Vid/main/lv_0_20260313014600.mp4']},
+  webPages:{titleKey:'webPages',descKey:'pagesDesc',price:'199$',images:['https://raw.githubusercontent.com/alaamnst-collab/Mawki3-wib/main/2.%2020260310_165821_112.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Mawki3-wib/main/3.%2020260310_165821_162.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Mawki3-wib/main/5.%2020260310_165841_165.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Mawki3-wib/main/Whisk_e81de0045f9bd27b5984d2af59c50ebadr.jpeg'],videos:[]},
+  stores:{titleKey:'stores',descKey:'storeDesc',price:'399$',images:['https://raw.githubusercontent.com/alaamnst-collab/Matjar/main/Whisk_1f592b2520f8dd582a644b4370569e97dr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Matjar/main/Whisk_4a59c1a8d42d26b9da641b123d245222dr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Matjar/main/Whisk_4ba3897a866e895b0e944613fab1a513dr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Matjar/main/Whisk_5cb739f83c2fb3588b54133807867764dr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Matjar/main/Whisk_fdda8906b0d86a4b3ae4b49c8c008060dr.jpeg'],videos:[]},
+  apps:{titleKey:'apps',descKey:'appDesc',price:'499$',images:['https://raw.githubusercontent.com/alaamnst-collab/Tatbik/main/Picsart_26-03-10_16-40-27-629.jpg','https://raw.githubusercontent.com/alaamnst-collab/Tatbik/main/Picsart_26-03-10_16-42-11-294.jpg','https://raw.githubusercontent.com/alaamnst-collab/Tatbik/main/Whisk_275473eff151c7082254edc1f15f798ddr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Tatbik/main/Whisk_6719437bc729151ba0d4d0f15babb2d6dr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Tatbik/main/Whisk_75df3d67a694fd48e464fddd4b69d033dr.jpeg'],videos:[]},
   automation:{titleKey:'automation',descKey:'autoDesc',price:'199$',images:['https://raw.githubusercontent.com/alaamnst-collab/Aouta/main/Whisk_074eecaebaf18388feb45168982b6dc2dr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Aouta/main/Whisk_5d5c4056a088fc18e584d533a5adc2bedr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Aouta/main/Whisk_ab18b77e934e46e8ecb4168a6c7f00bedr.jpeg','https://raw.githubusercontent.com/alaamnst-collab/Aouta/main/Whisk_af18b18fd2c83af9b054085aca3763c4dr.jpeg'],videos:[]},
 };
 
@@ -254,26 +258,21 @@ function buildLangBar(){
   });
 }
 
-// ========== RENDER ==========
+// ========== NAVIGATION & RENDER ==========
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId === 'home' ? 'home' : 'page-' + pageId).classList.add('active');
+    window.scrollTo(0,0);
+}
+
 function render(){
   document.documentElement.dir=lang==='ar'?'rtl':'ltr';
   document.documentElement.lang=lang;
   buildLangBar();
-  renderHome();
-  renderComments();
-  // Re-render active page
-  Object.keys(pagesData).forEach(k=>renderServicePage(k));
-  showPage(currentPage);
-}
-
-function renderHome(){
+  
+  // Render Home
   document.getElementById('heroTitle').textContent=t('heroTitle');
   document.getElementById('heroSubtitle').textContent=t('heroSubtitle');
   document.getElementById('heroDesc').textContent=t('heroDesc');
   document.getElementById('heroContact').textContent=t('contactMe');
-  document.getElementById('servicesTitle').textContent=t('services');
-  const grid=document.getElementById('servicesGrid');
-  grid.innerHTML='';
-  servicesData.forEach((s,i)=>{
-    const card=document.createElement('div');
-    card.className='glass-ca
+  document.getElementById('servicesTitle').textContent=t('s
